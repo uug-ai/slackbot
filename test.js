@@ -61,7 +61,7 @@ function testCommandParsing() {
   
   // Test various command formats
   const testCases = [
-    { input: 'login user@example.com password123', expected: ['login', 'user@example.com', 'password123'] },
+    { input: 'login user@example.com MyS3cur3P@ssw0rd!', expected: ['login', 'user@example.com', 'MyS3cur3P@ssw0rd!'] },
     { input: 'profile', expected: ['profile'] },
     { input: 'logout', expected: ['logout'] },
     { input: 'help', expected: ['help'] },

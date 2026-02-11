@@ -15,6 +15,7 @@ const app = new App({
 const KERBEROS_API_URL = process.env.KERBEROS_API_URL || 'https://api.cloud.kerberos.io';
 
 // Store user sessions (in production, use a proper database)
+// Session structure: { token: string, username: string, loginTime: Date }
 const userSessions = new Map();
 
 /**
@@ -52,7 +53,7 @@ async function kerberosApiCall(endpoint, method = 'GET', data = null, token = nu
  * Command: /hub login
  * Authenticate user with Kerberos.io API
  */
-app.command('/hub', async ({ command, ack, say, respond }) => {
+app.command('/hub', async ({ command, ack, respond }) => {
   await ack();
 
   const args = command.text.trim().split(/\s+/);
