@@ -8,14 +8,40 @@ A Slack bot that integrates with the Kerberos.io Hub API, allowing users to inte
 - 📊 **Profile Management**: View your profile information with `/hub profile`
 - 🚪 **Session Management**: Logout securely with `/hub logout`
 - ❓ **Help**: Get command information with `/hub help`
+- 🐳 **Docker Support**: Ready-to-use Dockerfile and docker-compose
+- 🔧 **Dev Container**: VSCode devcontainer for consistent development environment
+- 🔄 **CI/CD**: GitHub Actions workflows for automated testing and builds
 
 ## Prerequisites
 
 - Node.js 14.x or higher
 - A Slack workspace with admin access
 - A Kerberos.io account (https://kerberos.io)
+- (Optional) Docker for containerized deployment
+- (Optional) VSCode with Dev Containers extension for development
 
 ## Installation
+
+### Option 1: Using Dev Container (Recommended for Development)
+
+The easiest way to get started with development is using the included dev container configuration:
+
+1. **Prerequisites**:
+   - Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
+   - Install [VSCode](https://code.visualstudio.com/)
+   - Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+2. **Open in Dev Container**:
+   - Clone the repository
+   - Open the folder in VSCode
+   - When prompted, click "Reopen in Container" (or use Command Palette: `Dev Containers: Reopen in Container`)
+   - The container will build and install all dependencies automatically
+
+3. **Configure Environment**:
+   - Copy `.env.example` to `.env` and add your credentials
+   - The bot will be ready to run with `npm start`
+
+### Option 2: Local Installation
 
 ### 1. Clone the Repository
 
@@ -163,6 +189,44 @@ The bot integrates with the Kerberos.io Hub API at `https://api.cloud.kerberos.i
 
 ## Deployment
 
+### Docker
+
+The bot includes a production-ready Dockerfile and docker-compose configuration.
+
+**Using Docker Compose** (Recommended):
+
+```bash
+# 1. Configure environment
+cp .env.example .env
+# Edit .env with your credentials
+
+# 2. Build and run
+docker-compose up -d
+
+# 3. View logs
+docker-compose logs -f
+
+# 4. Stop the bot
+docker-compose down
+```
+
+**Using Docker directly**:
+
+```bash
+# Build the image
+docker build -t kerberos-slack-bot .
+
+# Run the container
+docker run -d \
+  --name kerberos-slack-bot \
+  --env-file .env \
+  -p 3000:3000 \
+  kerberos-slack-bot
+
+# View logs
+docker logs -f kerberos-slack-bot
+```
+
 ### Heroku
 
 ```bash
@@ -174,26 +238,34 @@ heroku config:set KERBEROS_API_URL=https://api.cloud.kerberos.io
 git push heroku main
 ```
 
-### Docker
-
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-CMD ["npm", "start"]
-```
-
-Build and run:
-```bash
-docker build -t kerberos-slack-bot .
-docker run -d --env-file .env -p 3000:3000 kerberos-slack-bot
-```
-
 ### AWS, GCP, or Azure
 
 Deploy as a containerized application or serverless function following platform-specific guides.
+
+## CI/CD
+
+The repository includes GitHub Actions workflows for automated testing and builds:
+
+### CI Workflow (`.github/workflows/ci.yml`)
+
+Runs on every push and pull request:
+- Tests on Node.js 18.x and 20.x
+- Runs unit tests (`npm test`)
+- Validates code syntax
+- Ensures code quality
+
+### Docker Build Workflow (`.github/workflows/docker.yml`)
+
+Builds Docker images:
+- Triggers on pushes to main branch and version tags
+- Uses Docker Buildx for optimized builds
+- Caches layers for faster builds
+- Validates Docker image creation
+
+To enable workflows:
+1. Push to your repository
+2. Workflows run automatically
+3. Check the "Actions" tab in GitHub for results
 
 ## Troubleshooting
 

@@ -1,0 +1,15 @@
+node_modules
+npm-debug.log
+.env
+.git
+.gitignore
+README.md
+QUICKSTART.md
+IMPLEMENTATION_SUMMARY.md
+test.js
+.devcontainer
+.github
+.vscode
+.idea
+*.md
+!package*.json
