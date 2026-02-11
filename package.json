@@ -1,0 +1,27 @@
+{
+  "name": "kerberos-slack-bot",
+  "version": "1.0.0",
+  "description": "Slack bot for interacting with Kerberos.io Hub API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "kerberos",
+    "hub"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/bolt": "^3.17.1",
+    "axios": "^1.6.5",
+    "dotenv": "^16.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
