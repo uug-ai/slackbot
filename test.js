@@ -90,7 +90,7 @@ function testApiUrlConstruction() {
   endpoints.forEach(endpoint => {
     const fullUrl = `${baseUrl}${endpoint}`;
     assert(fullUrl.startsWith('https://'), 'URL should use HTTPS');
-    assert(fullUrl.includes('api.cloud.kerberos.io'), 'URL should include correct domain');
+    assert(fullUrl === `https://api.cloud.kerberos.io${endpoint}`, 'URL should match exact expected format');
     assert(fullUrl.endsWith(endpoint), 'URL should end with endpoint');
   });
   
